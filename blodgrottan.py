@@ -4,6 +4,7 @@ import random
 namelist = ["dongelbär" , "honk" , "bertimus" , "bang" , "meow" , "woof", "fjärilsförstörare", "sten", "pinne"]
 randomname = random.choice(namelist)
 listdifficulty = []
+listcharacter = []
 
 # Funktion för att pausa och vänta på att spelaren trycker på valfri tangent
 def forsättsist():
@@ -20,7 +21,7 @@ class Character:
     def __init__(self, namn, health):
         self.namn = namn
         self.health = health
-        
+        listcharacter.append(self)
 
 
 print("Blodgrottan")
@@ -33,19 +34,30 @@ medium = Difficulty("Pro", 1)
 hard = Difficulty("Haxer", 2)
 
 #Karaktärer (HEALTH)
-guy_1 = Character("Honkel the 5th", 8)
+guy_1 = Character("Honkel the 5th", 16)
+guy_2 = Character("Dongles", 12)
+guy_3 = Character("Female character 1", 8)
 
 def choose_character():
-    your_choice2 = input("Vilken karaktär vill du välja? \n ")
-    print
+    while True:
+        your_choice2 = input("Vilken karaktär vill du välja? \n Honkel the 5th \n Dongles \n Female character 1 \n Karaktär: ")
+        for diff in listcharacter:
+            if diff.namn.lower() == your_choice2.lower():
+                character_name = diff.namn
+                print(f"Du valde {character_name}")
+                return
+
+choose_character()
 
 def choose_difficulty():
-    your_choice = input("Vilken svårighet vill du välja? \n Noob \n Pro \n Haxer ")
+    while True:
+        your_choice = input("\nVilken svårighet vill du välja? \n Noob \n Pro \n Haxer\n \nSvårighet: ")
+        for diff in listdifficulty:
+            if diff.namn.lower() == your_choice.lower():
+                difficulty_name = diff.namn
+                print(f"Du valde {difficulty_name}")
+                return
 
-    for diff in listdifficulty:
-        if diff.namn.lower() == your_choice.lower():
-            difficulty_name = diff.namn
-            print(f"Du valde {difficulty_name}")
 choose_difficulty()
 
 
@@ -53,7 +65,7 @@ choose_difficulty()
 
     
 
-name = input("Vad heter du, grottman? ")
+name = input("Vad heter du grottman? ")
 
 
 print(f"Du är grottmannen {name}, och nu ska du strida mot grottmannen {randomname}.")
