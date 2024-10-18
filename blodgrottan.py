@@ -5,12 +5,20 @@ namelist = ["dongelbär" , "honk" , "bertimus" , "bang" , "meow" , "woof", "fjä
 randomname = random.choice(namelist)
 listdifficulty = []
 listcharacter = []
+listdamage = []
 
 # Funktion för att pausa och vänta på att spelaren trycker på valfri tangent
 def forsättsist():
     input("Tryck på vilken knapp som helst för att fortsätta...")
 def fortsätt():
     input("")
+class Attack:
+    def __init__(self, namn, damage, chance):
+        self.namn = namn
+        self.damage = damage
+        self.chance = chance
+
+
 class Difficulty:
     def __init__(self, namn, multi):
         self.namn = namn
@@ -37,6 +45,13 @@ hard = Difficulty("Haxer", 2)
 guy_1 = Character("Honkel the 5th", 16)
 guy_2 = Character("Dongles", 12)
 guy_3 = Character("Female character 1", 8)
+
+#Attack (DAMAGE, CHANCE)
+attack_1 = Attack("Slag", 1, 70)
+attack_2 = Attack("Spark", 3, 40)
+attack_3 = Attack("Smack", 2, 60)
+attack_4 = Attack("Headbutt", 5, 10)
+
 
 def choose_character():
     while True:
@@ -65,7 +80,7 @@ choose_difficulty()
 
     
 
-name = input("Vad heter du grottman? ")
+name = input("\nVad heter du grottman? ")
 
 
 print(f"Du är grottmannen {name}, och nu ska du strida mot grottmannen {randomname}.")
@@ -88,3 +103,4 @@ fortsätt()
 
 print("Striden kan börja när som helst.\n")
 forsättsist()
+
