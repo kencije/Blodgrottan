@@ -5,7 +5,7 @@ namelist = ["dongelbär" , "honk" , "bertimus" , "bang" , "meow" , "woof", "fjä
 randomname = random.choice(namelist)
 listdifficulty = []
 listcharacter = []
-listdamage = []
+listattack = []
 
 # Funktion för att pausa och vänta på att spelaren trycker på valfri tangent
 def forsättsist():
@@ -17,6 +17,7 @@ class Attack:
         self.namn = namn
         self.damage = damage
         self.chance = chance
+        listattack.append(self)
 
 
 class Difficulty:
@@ -52,21 +53,25 @@ attack_2 = Attack("Spark", 3, 40)
 attack_3 = Attack("Smack", 2, 60)
 attack_4 = Attack("Headbutt", 5, 10)
 
+your_choice2 = None
 
 def choose_character():
     while True:
-        your_choice2 = input("Vilken karaktär vill du välja? \n Honkel the 5th \n Dongles \n Female character 1 \n Karaktär: ")
+        global your_choice2
+        your_choice2 = input("Vilken karaktär vill du välja? \n - Honkel the 5th \n - Dongles \n - Female character 1 \n Karaktär: ")
         for diff in listcharacter:
             if diff.namn.lower() == your_choice2.lower():
                 character_name = diff.namn
                 print(f"Du valde {character_name}")
                 return
 
+
+
 choose_character()
 
 def choose_difficulty():
     while True:
-        your_choice = input("\nVilken svårighet vill du välja? \n Noob \n Pro \n Haxer\n \nSvårighet: ")
+        your_choice = input("\nVilken svårighet vill du välja? \n - Noob \n - Pro \n - Haxer\n \n - Svårighet: ")
         for diff in listdifficulty:
             if diff.namn.lower() == your_choice.lower():
                 difficulty_name = diff.namn
@@ -75,10 +80,36 @@ def choose_difficulty():
 
 choose_difficulty()
 
+def display_health(current_health, max_health):
+    # Skapa en hälsorad med fyllda hjärtan för nuvarande hälsa och tomma hjärtan för förlorad hälsa
+    health_bar = "♥" * current_health + "♡" * (max_health - current_health)
+    # Returnera strängen som visar hälsoraden och numeriska värden
+    return f"HP: {health_bar} ({current_health}/{max_health})"
+
+# Exempel på användning i ditt spel:
+def update_health_display():
+    # Hämta karaktärens nuvarande hälsa och maxhälsa
+    for char in listcharacter:
+        if char.namn.lower() == your_choice2.lower():
+            max_health = char.health
+            current_health = char.health  # Detta skulle uppdateras under strid
+            
+            # Visa hälsoraden
+            health_status = display_health(current_health, max_health)
+            print(health_status)
+            return health_status
 
 
+# Till exempel, om en karaktär har 8 i hälsa, skulle det visa:
+# HP: ♥♥♥♥♥♥♥♥ (8/8)
+# Om de tar 3 i skada:
+# HP: ♥♥♥♥♥♡♡♡ (5/8)
 
+def attack_choice():
+    random_chance = random.randint(0, 100)
+    choose_attack = input("Välj din attack: ")
     
+
 
 name = input("\nVad heter du grottman? ")
 
@@ -104,3 +135,5 @@ fortsätt()
 print("Striden kan börja när som helst.\n")
 forsättsist()
 
+# Efter varje attack eller hälsoförändring kan du anropa:
+update_health_display()
