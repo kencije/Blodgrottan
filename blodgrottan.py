@@ -10,7 +10,7 @@ def forsättsist():
     input("Tryck på vilken knapp som helst för att fortsätta...")
 
 def enter():
-    input("Klicka på enter för att fortsätta...")
+    input("\nKlicka på enter för att fortsätta...\n")
 
 
 # Klassdefinitioner för Attack, Svårighet och Karaktär
@@ -33,6 +33,12 @@ class Character:
         self.health = health
         listcharacter.append(self)
 
+class Opponent:
+    def __init__(self):
+        self.namn = random.choice(namelist)  # Välj slumpmässigt namn
+        self.health = random.randint(6, 18)  # Slumpa hälsa mellan 6 och 18
+        print(f"Motståndarend du möter är {self.namn} med {self.health} HP.")
+
 # Skapa svårigheter, karaktärer och attacker
 def setup_game():
     Difficulty("Noob", 0.5)
@@ -41,7 +47,7 @@ def setup_game():
 
     Character("Honkel the 5th", 16)
     Character("Dongles", 12)
-    Character("Female character 1", 8)
+    Character("Female character", 10)
 
     Attack("Slag", 1, 70)
     Attack("Spark", 3, 40)
@@ -51,7 +57,7 @@ def setup_game():
 # Välj karaktär och svårighet
 def choose_character():
     while True:
-        your_choice = input("Vilken karaktär vill du välja? \n - Honkel the 5th \n - Dongles \n - Female character 1 \n Karaktär: ")
+        your_choice = input("Skriv in karaktären du vill välja \n - Honkel the 5th 16 HP \n - Dongles 12 HP \n - Female character 1 10 HP \n Karaktär: ")
         for char in listcharacter:
             if char.namn.lower() == your_choice.lower():
                 print(f"Du valde {char.namn}")
@@ -60,7 +66,7 @@ def choose_character():
 
 def choose_difficulty():
     while True:
-        your_choice = input("\nVilken svårighet vill du välja? \n - Noob \n - Pro \n - Haxer\n \nSvårighet: ")
+        your_choice = input("\nSkriv in svårigheten du vill välja \n - Noob \n - Pro \n - Haxer\n \nSvårighet: ")
         for diff in listdifficulty:
             if diff.namn.lower() == your_choice.lower():
                 print(f"Du valde {diff.namn}")
@@ -87,7 +93,6 @@ def choose_attack():
 # Strid
 def battle(player, opponent, difficulty):
     print(f"\nStriden börjar mellan {player.namn} och {opponent.namn}!")
-    fortsätt()
 
     while player.health > 0 and opponent.health > 0:
         # Spelaren väljer en attack
@@ -123,7 +128,6 @@ def battle(player, opponent, difficulty):
         # Visa båda karaktärernas hälsa
         print(f"\n{player.namn}'s hälsa: {player.health}")
         print(f"{opponent.namn}'s hälsa: {opponent.health}")
-        fortsätt()
 
 # Starta spelet
 def start_game():
@@ -133,7 +137,7 @@ def start_game():
     
     name = input("\nVad heter du grottman? ")
     randomname = random.choice(namelist)
-    print(f"Du är grottmannen {name}, och nu ska du strida mot grottmannen {randomname}.")
+    print(f"Du är grottmannen {name}")
     enter()
     print("Ni står i en stor grotta, omgiven av hungriga ögon från stammedlemmar.")
     enter()
@@ -144,7 +148,7 @@ def main():
     setup_game()
     start_game()
     player = choose_character()
-    opponent = random.choice(listcharacter)
+    opponent = Opponent()
     difficulty = choose_difficulty()
     
     # Starta striden
